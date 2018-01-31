@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: {{ cookiecutter.hostname }}
   become: true
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -9,3 +9,6 @@
       apt:
         update_cache: yes
         cache_valid_time: 86400
+
+- include: init_basic_user.yml
+- include: server_setup.yml

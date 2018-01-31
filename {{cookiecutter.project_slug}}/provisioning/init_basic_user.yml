@@ -1,0 +1,18 @@
+---
+- hosts: {{ cookiecutter.hostname }}
+  remote_user: root
+  become: true
+  vars:
+    USER_NAME: '{{ cookiecutter.user }}'
+  tasks:
+    - name: "Create a secondary, non-root user"
+      user: name={{ USER_NAME }}
+            password='$6$rounds=656000$W.dSlhtSxE2HdSc1$4WbCFM6zQV1hTQYTCqmcddnKrSXIZ9LfWRAjJBervBFG.rH953lTa7rMeZNrN65zPzEONntMtYt9Bw74PvAei0'
+            shell=/bin/bash
+    - name: Add remote authorized key to allow future passwordless logins
+      authorized_key: user={{ USER_NAME }} key="{{ lookup('file', '/Users/theo.despoudis/.ssh/id_rsa.pub') }}"
+    - name: Add normal user to sudoers
+      lineinfile: dest=/etc/sudoers
+                  regexp="{{ USER_NAME }} ALL"
+                  line="{{ USER_NAME }} ALL=(ALL) ALL"
+                  state=present
