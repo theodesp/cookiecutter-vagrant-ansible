@@ -1,14 +1,15 @@
 ---
 - hosts: {{ cookiecutter.hostname }}
-  become: true
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-  tasks:
-    - name: Run "apt-get update"
+  pre_tasks:
+    - name: Update apt cache if needed.
       apt:
+        become: yes
         update_cache: yes
         cache_valid_time: 86400
+
 
 - include: init_basic_user.yml
 - include: server_setup.yml
