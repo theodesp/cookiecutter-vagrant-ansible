@@ -1,6 +1,7 @@
 ---
 - name: Configure Host
   hosts: all
+  gather_facts: yes
   remote_user: deploy
   become: yes
   become_method: sudo
@@ -10,7 +11,7 @@
         name: 'UTC'
     - name: Set up a unique hostname
       hostname: name={{'{{'}} inventory_hostname {{'}}'}}
-    - name: Add the server's domain to the hosts file
+    - name: Update hosts file
       lineinfile: dest=/etc/hosts
                   regexp='.*{{'{{'}} item {{'}}'}}$'
                   line="{{'{{'}} hostvars[item].ansible_default_ipv4.address {{'}} {{'}} hostvars[item]['inventory_hostname'] {{'}} {{'}} hostvars[item]['inventory_hostname'] {{'}}'}}"
