@@ -10,13 +10,13 @@
     - name: Set the timezone for the server to be UTC
       command: ln -sf /usr/share/zoneinfo/UTC /etc/localtime
     - name: Set up a unique hostname
-      hostname: name={{ LOCAL_HOSTNAME }}
+      hostname: name={{'{{'}} LOCAL_HOSTNAME {{'}}'}}
     - name: Add the server's domain to the hosts file
       lineinfile: dest=/etc/hosts
-                  regexp='.*{{ item }}$'
-                  line="{{ hostvars[item].ansible_default_ipv4.address }} {{ LOCAL_FQDN_NAME }} {{ LOCAL_HOSTNAME }}"
+                  regexp='.*{{'{{'}} item {{'}}'}}$'
+                  line="{{'{{'}} hostvars[item].ansible_default_ipv4.address {{'}} {{'}} LOCAL_FQDN_NAME {{'}} {{'}} LOCAL_HOSTNAME {{'}}'}}"
                   state=present
       when: hostvars[item].ansible_default_ipv4.address is defined
-      with_items: "{{ groups['{{ cookiecutter.hostname }}'] }}"
+      with_items: "{{'{{'}} groups['{{ cookiecutter.hostname }}'] {{'}}'}}"
     - name: Update packages
       apt: update_cache=yes upgrade=dist
