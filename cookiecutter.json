@@ -7,7 +7,7 @@
     "project_short_description": "A short description of the project",
     "release_date": "{% now 'local' %}",
     "version": "0.1.0",
-    "hostname": "Name of the host machine",
+    "hostname": "Name of the guest machine",
     "user": "Name of the user to add to the machine",
     "memory": "Memory of the machine provisioned (eg. 1024)",
     "_extensions": ["jinja2_time.TimeExtension"]
