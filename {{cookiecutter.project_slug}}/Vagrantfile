@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   end
   
   config.vm.define "{{ cookiecutter.hostname }}" do |hostconfig|
+    hostconfig.vm.hostname = "{{ cookiecutter.hostname }}"
     hostconfig.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/{{ cookiecutter.hostname}}.yml"
     end
