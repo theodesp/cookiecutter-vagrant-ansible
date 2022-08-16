@@ -20,3 +20,4 @@
       with_items: "{{'{{'}} groups['all'] {{'}}'}}"
     - name: Update packages
       apt: update_cache=yes upgrade=dist
+
